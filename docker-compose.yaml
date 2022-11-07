@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: .docker/frontend/Dockerfile
+    container_name: nextjs_container
+    ports:
+      # node.js/Next.js
+      - "8080:8080"
+    volumes:
+      - "./app/frontend:/home/node/hasura-advanced-FirebaseHasuraJWT/frontend/app"
+    tty: true
+    stdin_open: true
