@@ -52,7 +52,7 @@ export const useUserChanged = () => {
             .firestore()
             .collection('user_meta')
             .doc(user.uid)
-          //　ドキュメントに更新がある場合JWTトークンをクッキーに保存し、タスクページに遷移する
+          //　ドキュメントの監視を行い、更新がある場合JWTトークンをクッキーに保存し、タスクページに遷移する
           unSubMeta = userRef.onSnapshot(async () => {
             const tokenSnap = await user.getIdToken(true)
             const idTokenResultSnap = await user.getIdTokenResult()
