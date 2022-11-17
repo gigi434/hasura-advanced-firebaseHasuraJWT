@@ -5,4 +5,6 @@ ENV NODE_VERSION 14.18.1
 USER node
 
 WORKDIR /home/node/hasura-advanced-FirebaseHasuraJWT/frontend/app
+RUN yarn global add firebase-tools
+
 RUN chown -R node:node /home/node/hasura-advanced-FirebaseHasuraJWT/frontend/app

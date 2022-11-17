@@ -1,5 +1,5 @@
 import Cookie from 'universal-cookie'
-import firebase from 'firebase'
+import firebase from '../firebaseConfig'
 import { unSubMeta } from './useUserChanged'
 
 // クッキーの初期化

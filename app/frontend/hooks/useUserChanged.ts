@@ -1,8 +1,9 @@
 // ユーザーが新規登録やログイン、ログアウトなど行った際のFirebaseへのユーザー情報更新を行うカスタムフック
 import { useEffect } from 'react'
-import firebase from 'firebase'
-import { useRouter } from 'next/dist/client/router'
+import firebase from '../firebaseConfig'
+import { useRouter } from 'next/router'
 import Cookie from 'universal-cookie'
+import { AdjustmentsIcon } from '@heroicons/react/solid'
 
 /**
  * ユーザーのアカウント情報変更を監視するFirebaseのサブスクリプションを停止する関数オブジェクト
@@ -42,7 +43,7 @@ export const useUserChanged = () => {
         // もしJWTトークンにHasuraのカスタムクレームがあればクッキーにJWTトークンを保存する
         if (hasuraClaims) {
           // クッキーにJWTトークンを保存する
-          cookie.set('token', token, { path: '/' })
+          cookie.set('__session', token, { path: '/', secure: false })
           // タスクページに遷移する
           router.push('/tasks')
           // もしJWTトークンにHasuraのカスタムクレームがまだ保存されていなければ、FirebaseのonSnapShotメソッドによるユーザー情報変更検知を待つ
@@ -58,7 +59,7 @@ export const useUserChanged = () => {
             const idTokenResultSnap = await user.getIdTokenResult()
             const hasuraClaimsSnap = idTokenResultSnap.claims[HASURA_TOKEN_KEY]
             if (hasuraClaimsSnap) {
-              cookie.set('token', tokenSnap, { path: '/' })
+              cookie.set('__session', tokenSnap, { path: '/', secure: false })
               router.push('/tasks')
             }
           })

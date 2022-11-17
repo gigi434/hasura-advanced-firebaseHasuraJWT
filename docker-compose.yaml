@@ -13,3 +13,7 @@ services:
       - "./app/frontend:/home/node/hasura-advanced-FirebaseHasuraJWT/frontend/app"
     tty: true
     stdin_open: true
+    env_file:
+      - .env
+    environment:
+      - PATH:$FIREBASE_ENVIRONMENT

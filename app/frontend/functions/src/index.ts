@@ -10,7 +10,7 @@ admin.initializeApp();
 export const setCustomClaims = functions.auth.user().onCreate(async (user) => {
   // 新規登録ユーザーに与える管理者権限とユーザーIDが定義された定数を定義する
   const customClaims = {
-    "https://hasura.io/jwt/clamis": {
+    "https://hasura.io/jwt/claims": {
       // クライアントからのユーザー権限指定がない場合、デフォルトで設定されるロールのこと。
       "x-hasura-default-role": "staff",
       // Hasuraに存在するロール一覧のこと。今回はstaffしか使用しないためstaffだけである。
@@ -29,7 +29,7 @@ export const setCustomClaims = functions.auth.user().onCreate(async (user) => {
     // これにより、Firebaseでの認証とアプリケーションとの同期を可能にする
     await admin.firestore().collection("user_meta").doc(user.uid).create({
       // Firestoreのタイムスタンプを書き込む
-      refeshTime: admin.firestore.FieldValue.serverTimestamp(),
+      refreshTime: admin.firestore.FieldValue.serverTimestamp(),
     });
   } catch (err) {
     console.log(err);

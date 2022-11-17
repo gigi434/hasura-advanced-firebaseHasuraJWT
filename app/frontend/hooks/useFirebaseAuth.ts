@@ -1,5 +1,5 @@
 import { useState, useCallback, ChangeEvent, FormEvent } from 'react'
-import firebase from 'firebase'
+import firebase from '../firebaseConfig'
 
 /**
  * ユーザーの名前、EメールをFirebaseに送信するためのカスタムフック
