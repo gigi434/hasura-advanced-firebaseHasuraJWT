@@ -1,3 +1,4 @@
+/* タスクのデータ参照用カスタムフック */
 import { useEffect } from 'react'
 import { GraphQLClient } from 'graphql-request'
 import { useQuery } from 'react-query'
