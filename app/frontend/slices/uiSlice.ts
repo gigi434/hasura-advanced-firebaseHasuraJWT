@@ -33,14 +33,14 @@ export const uiSlice = createSlice({
     resetEditedTask: (state) => {
       state.editedTask = initialState.editedTask
     },
-    // 編集中のニューズを更新する
+    // 編集中のニュースを更新する
     setEditedNews: (state, action: PayloadAction<EditNews>) => {
       state.editedNews = action.payload
     },
     // ニュースの更新をキャンセルし、更新前に戻す
     resetEditedNews: (state) => {
       state.editedNews = initialState.editedNews
-    }
+    },
   },
 })
 
@@ -48,7 +48,7 @@ export const {
   setEditedTask,
   resetEditedTask,
   setEditedNews,
-  resetEditedNews
+  resetEditedNews,
 } = uiSlice.actions
 
 // コンポーネントからグローバルステートを参照できる関数オブジェクトを定義する

@@ -65,7 +65,7 @@ export const useAppMutate = () => {
     (task: EditTask) => graphQLClient.request(UPDATE_TASK, task),
     {
       // resはuseMutationの第一引数で設定したmutationFnの返り値のこと
-      // variablesはuseMutationで返されるmutate関数に渡された引数のこと
+      // variablesはuseMutationの第一引数で設定されるmutateFn関数の引数のこと　この場合task: EditTaskである
       onSuccess: (res, variables) => {
         // 更新前に設定されていたタスクを定義する
         const previousTodos = queryClient.getQueryData<Task[]>('tasks')
