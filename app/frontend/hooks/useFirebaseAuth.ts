@@ -10,7 +10,6 @@ import firebase from '../firebaseConfig'
 export const useFirebaseAuth = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  // ログインしているかしていないかのフック
   const [isLogin, setIsLogin] = useState(true)
 
   /**

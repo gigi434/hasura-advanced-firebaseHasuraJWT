@@ -9,7 +9,7 @@ interface NewsItemProps {
   news: News
 }
 
-const NewsItems = ({ news }: NewsItemProps) => {
+const NewsItem = ({ news }: NewsItemProps) => {
   // グローバルステートの更新関数を定義する
   const dispatch = useDispatch()
 
@@ -43,4 +43,4 @@ const NewsItems = ({ news }: NewsItemProps) => {
   )
 }
 
-export const NewsItemMemo = memo(NewsItems)
+export const NewsItemMemo = memo(NewsItem)

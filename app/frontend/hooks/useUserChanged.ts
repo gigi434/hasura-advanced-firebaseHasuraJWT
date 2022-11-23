@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 import firebase from '../firebaseConfig'
 import { useRouter } from 'next/router'
 import Cookie from 'universal-cookie'
-import { AdjustmentsIcon } from '@heroicons/react/solid'
 
 /**
  * ユーザーのアカウント情報変更を監視するFirebaseのサブスクリプションを停止する関数オブジェクト
@@ -34,16 +33,19 @@ export const useUserChanged = () => {
     const unSubUser = firebase.auth().onAuthStateChanged(async (user) => {
       // もしユーザー情報の更新があればJWTトークンの更新を行う
       if (user) {
-        // JWTをFirebaseに返を返し、有効期限に関係なくJWTトークンを更新する。その後、JWTを定義する
+        // JWTトークンをFirebaseに返し、有効期限に関係なくJWTトークンを更新する。その後、JWTを定義する
         const token = await user.getIdToken(true)
         // JWTトークンを取得する
         const idTokenResult = await user.getIdTokenResult()
         // JWTトークンにHasuraへのカスタムクレームが含まれているか判定する
         const hasuraClaims = idTokenResult.claims[HASURA_TOKEN_KEY]
         // もしJWTトークンにHasuraのカスタムクレームがあればクッキーにJWTトークンを保存する
+        console.log(token)
+        console.log(idTokenResult)
+        console.log(hasuraClaims)
         if (hasuraClaims) {
           // クッキーにJWTトークンを保存する
-          cookie.set('__session', token, { path: '/', secure: false })
+          cookie.set('token', token, { path: '/', secure: false })
           // タスクページに遷移する
           router.push('/tasks')
           // もしJWTトークンにHasuraのカスタムクレームがまだ保存されていなければ、FirebaseのonSnapShotメソッドによるユーザー情報変更検知を待つ
@@ -59,7 +61,7 @@ export const useUserChanged = () => {
             const idTokenResultSnap = await user.getIdTokenResult()
             const hasuraClaimsSnap = idTokenResultSnap.claims[HASURA_TOKEN_KEY]
             if (hasuraClaimsSnap) {
-              cookie.set('__session', tokenSnap, { path: '/', secure: false })
+              cookie.set('token', tokenSnap, { path: '/', secure: false })
               router.push('/tasks')
             }
           })

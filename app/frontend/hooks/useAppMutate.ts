@@ -17,20 +17,19 @@ import { resetEditedTask, resetEditedNews } from '../slices/uiSlice'
 
 // クッキーを利用するための初期化
 const cookie = new Cookie()
-
 // Hasuraのエンドポイントを定義する
 const endpoint = process.env.NEXT_PUBLIC_HASURA_ENDPOINT || ''
-
 // GraphQLClientを利用するための初期化
 let graphQLClient: GraphQLClient
 
 export const useAppMutate = () => {
+  // reduxのdispatch関数オブジェクトを利用するためにdispatch関数オブジェクトを定義する
   const dispatch = useDispatch()
   // 既存のクッキーに保存されているキャッシュ情報を更新する場合は手動で定義する必要があるため、クッキー自体を利用するために初期化する
   const queryClient = useQueryClient()
 
   useEffect(() => {
-    const graphQLClient = new GraphQLClient(endpoint, {
+    graphQLClient = new GraphQLClient(endpoint, {
       headers: {
         Authorization: `Bearer ${cookie.get('token')}`,
       },
@@ -102,13 +101,14 @@ export const useAppMutate = () => {
     (content: string) =>
       graphQLClient.request(CREATE_NEWS, { content: content }),
     {
-      onSuccess: (res, variables) => {
-        // 更新前に設定されていたタスクを定義する
+      onSuccess: (res) => {
         const previousNews = queryClient.getQueryData<News[]>('news')
+        console.log(previousNews)
         if (previousNews) {
-          queryClient.setQueryData<News[]>('news', [
+          queryClient.setQueryData('news', [
             ...previousNews,
             res.insert_news_one,
+            console.log(res.insert_news_one),
           ])
         }
         dispatch(resetEditedNews())

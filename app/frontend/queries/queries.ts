@@ -1,4 +1,3 @@
-// GraphQLのクエリを定義する
 import { gql } from 'graphql-request'
 
 export const GET_NEWS = gql`

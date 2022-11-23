@@ -5,6 +5,7 @@ import Layout from '../components/Layouts'
 import firebase from '../firebaseConfig'
 import { useLogout } from '../hooks/useLogout'
 import { NewsListMemo } from '../components/NewsList'
+import { NewsEditMemo } from '../components/NewsEdit'
 
 const Tasks = () => {
   // 認証をトリガーにページ遷移させるために初期化する
@@ -27,9 +28,12 @@ const Tasks = () => {
           router.push('/')
         }}
       />
-      {/* タスク一覧 */}
+      {/* ニュース一覧とニュース更新を2列で表示する */}
       <p className="mt-10 mb-5 text-blue-500 text-xl font-bold">News Edit</p>
-      <NewsListMemo />
+      <div className="grid grid-cols-2 gap-40">
+        <NewsListMemo />
+        <NewsEditMemo />
+      </div>
       {/* クリックするとトップページへ遷移する要素を表示する */}
       <Link href="/">
         <div className="mt-20 flex items-center cursor-pointer">
