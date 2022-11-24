@@ -4,7 +4,7 @@ import { NewsItemMemo } from './NewsItem'
 
 const NewsList = () => {
   const { status, data } = useQueryNews()
-  if (status === 'loading') return <div>{'Loding...'}</div>
+  if (status === 'loading') return <div>{'Loading...'}</div>
   if (status === 'error') return <div>{'Error'}</div>
   return (
     <ul>

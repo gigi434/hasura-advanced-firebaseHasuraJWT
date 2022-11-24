@@ -37,10 +37,6 @@ export const useAppMutate = () => {
     // ユーザーアカウント情報に変更があるたびにGraphQLクライアントインスタンスを生成し直し、クッキーにJWTトークンを保存し直す
   }, [cookie.get('token')])
 
-  /**
-   * @detail タスクの更新時に使用するカスタムフック
-   * @param title string タスクの名前
-   */
   const createTaskMutation = useMutation(
     (title: string) => graphQLClient.request(CREATE_TASK, { title: title }),
     {
@@ -73,7 +69,7 @@ export const useAppMutate = () => {
           queryClient.setQueryData<Task[]>(
             'tasks',
             previousTodos.map((task) =>
-              task.id === variables.id ? res.updata_tasks_by_pk : task
+              task.id === variables.id ? res.update_tasks_by_pk : task
             )
           )
         }
@@ -91,9 +87,11 @@ export const useAppMutate = () => {
         if (previousTodos) {
           queryClient.setQueryData<Task[]>(
             'tasks',
-            previousTodos.filter((task) => task.id === variables)
+            // 削除するタスク以外のタスクをreact-queryのキャッシュに保存する
+            previousTodos.filter((task) => task.id !== variables)
           )
         }
+        dispatch(resetEditedTask())
       },
     }
   )
@@ -108,7 +106,6 @@ export const useAppMutate = () => {
           queryClient.setQueryData('news', [
             ...previousNews,
             res.insert_news_one,
-            console.log(res.insert_news_one),
           ])
         }
         dispatch(resetEditedNews())

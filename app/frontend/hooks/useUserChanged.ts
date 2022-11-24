@@ -40,9 +40,6 @@ export const useUserChanged = () => {
         // JWTトークンにHasuraへのカスタムクレームが含まれているか判定する
         const hasuraClaims = idTokenResult.claims[HASURA_TOKEN_KEY]
         // もしJWTトークンにHasuraのカスタムクレームがあればクッキーにJWTトークンを保存する
-        console.log(token)
-        console.log(idTokenResult)
-        console.log(hasuraClaims)
         if (hasuraClaims) {
           // クッキーにJWTトークンを保存する
           cookie.set('token', token, { path: '/', secure: false })

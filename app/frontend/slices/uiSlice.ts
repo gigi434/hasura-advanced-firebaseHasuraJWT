@@ -52,6 +52,7 @@ export const {
 } = uiSlice.actions
 
 // コンポーネントからグローバルステートを参照できる関数オブジェクトを定義する
+// 例） selectTask(task: editedTask) => { id: ..., content: ...}
 export const selectTask = (state: RootState) => state.ui.editedTask
 export const selectNews = (state: RootState) => state.ui.editedNews
 
