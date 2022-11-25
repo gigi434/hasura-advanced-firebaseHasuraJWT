@@ -1,14 +1,15 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { useUserChanged } from '../hooks/useUserChanged'
+import { useState } from 'react'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
+import { Hydrate } from 'react-query/hydration'
 import { Provider } from 'react-redux'
 import { store } from '../app/store'
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { useState } from 'react'
-import { ReactQueryDevtools } from 'react-query/devtools'
+import { useUserChanged } from '../hooks/useUserChanged'
 
 export default function App({ Component, pageProps }: AppProps) {
-  const {} = useUserChanged()
+  useUserChanged()
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -24,9 +25,12 @@ export default function App({ Component, pageProps }: AppProps) {
   )
   return (
     <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
-        <Component {...pageProps} />
-      </Provider>
+      {/* SSG（ビルド時）やISRにおいて、キャッシュとしてindex.jsonのpagePropsオブジェクトのプロパティに格納されるため、stateに渡す */}
+      <Hydrate state={pageProps.dehydratedState}>
+        <Provider store={store}>
+          <Component {...pageProps} />
+        </Provider>
+      </Hydrate>
       <ReactQueryDevtools />
     </QueryClientProvider>
   )

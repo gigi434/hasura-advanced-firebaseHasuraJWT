@@ -57,7 +57,7 @@ const Auth = () => {
       />
       {/* ログインしてるならtasksページへのリンクを表示する */}
       {user && (
-        <Link href="/tasks">
+        <Link href="/tasks" passHref>
           <div className="flex items-center cursor-pointer my-3">
             <ChevronDoubleRightIcon className="h-5 w-5 mx-1 text-blue-500" />
             <span>to tasks page</span>

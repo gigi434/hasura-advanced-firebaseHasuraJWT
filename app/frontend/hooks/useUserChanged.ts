@@ -71,5 +71,4 @@ export const useUserChanged = () => {
       unSubUser()
     }
   }, [])
-  return {}
 }

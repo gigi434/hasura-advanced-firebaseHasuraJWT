@@ -1,6 +1,6 @@
-import Image from 'next/dist/client/image'
 import Head from 'next/head'
-import { Children, ReactNode } from 'react'
+import Image from 'next/image'
+import { ReactNode } from 'react'
 
 interface LayoutProps {
   children: ReactNode
@@ -26,7 +26,7 @@ const Layout = (props: LayoutProps) => {
           rel="noopener noreferrer"
         >
           Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+          <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
         </a>
       </footer>
     </div>

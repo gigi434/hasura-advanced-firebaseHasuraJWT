@@ -2,12 +2,12 @@ import { ChevronDoubleLeftIcon, LogoutIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Layout from '../components/Layouts'
+import { NewsEditMemo } from '../components/NewsEdit'
+import { NewsListMemo } from '../components/NewsList'
+import { TaskEditMemo } from '../components/TaskEdit'
+import { TaskListMemo } from '../components/TaskList'
 import firebase from '../firebaseConfig'
 import { useLogout } from '../hooks/useLogout'
-import { NewsListMemo } from '../components/NewsList'
-import { NewsEditMemo } from '../components/NewsEdit'
-import { TaskListMemo } from '../components/TaskList'
-import { TaskEditMemo } from '../components/TaskEdit'
 
 const Tasks = () => {
   // 認証をトリガーにページ遷移させるために初期化する
@@ -43,7 +43,7 @@ const Tasks = () => {
         <TaskEditMemo />
       </div>
       {/* クリックするとトップページへ遷移する要素を表示する */}
-      <Link href="/">
+      <Link href="/" passHref>
         <div className="mt-20 flex items-center cursor-pointer">
           <ChevronDoubleLeftIcon className="h-5 w-5 mx-1 text-blue-500" />
           <span>Back to main page</span>
