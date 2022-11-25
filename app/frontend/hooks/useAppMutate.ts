@@ -1,7 +1,8 @@
 /* タスクのデータ更新用カスタムフック */
+import { GraphQLClient } from 'graphql-request'
 import { useEffect } from 'react'
 import { useQueryClient, useMutation } from 'react-query'
-import { GraphQLClient } from 'graphql-request'
+import { useDispatch } from 'react-redux'
 import Cookie from 'universal-cookie'
 import {
   CREATE_TASK,
@@ -11,9 +12,8 @@ import {
   DELETE_NEWS,
   UPDATE_NEWS,
 } from '../queries/queries'
-import { Task, EditTask, News, EditNews } from '../types/types'
-import { useDispatch } from 'react-redux'
 import { resetEditedTask, resetEditedNews } from '../slices/uiSlice'
+import { Task, EditTask, News, EditNews } from '../types/types'
 
 // クッキーを利用するための初期化
 const cookie = new Cookie()
@@ -53,6 +53,9 @@ export const useAppMutate = () => {
         // 作成するタスクを空のオブジェクトにすることで、表示を空欄にする
         dispatch(resetEditedTask())
       },
+      onError: () => {
+        dispatch(resetEditedTask())
+      },
     }
   )
 
@@ -60,7 +63,7 @@ export const useAppMutate = () => {
     (task: EditTask) => graphQLClient.request(UPDATE_TASK, task),
     {
       // resはuseMutationの第一引数で設定したmutationFnの返り値のこと
-      // variablesはuseMutationの第一引数で設定されるmutateFn関数の引数のこと　この場合task: EditTaskである
+      // variablesはuseMutationの第一引数で設定されるmutateFn関数の引数のこと この場合task: EditTaskである
       onSuccess: (res, variables) => {
         // 更新前に設定されていたタスクを定義する
         const previousTodos = queryClient.getQueryData<Task[]>('tasks')
@@ -73,6 +76,9 @@ export const useAppMutate = () => {
             )
           )
         }
+        dispatch(resetEditedTask())
+      },
+      onError: () => {
         dispatch(resetEditedTask())
       },
     }
@@ -93,6 +99,9 @@ export const useAppMutate = () => {
         }
         dispatch(resetEditedTask())
       },
+      onError: () => {
+        dispatch(resetEditedTask())
+      },
     }
   )
   const createNewsMutation = useMutation(
@@ -108,6 +117,9 @@ export const useAppMutate = () => {
             res.insert_news_one,
           ])
         }
+        dispatch(resetEditedNews())
+      },
+      onError: () => {
         dispatch(resetEditedNews())
       },
     }
@@ -128,6 +140,9 @@ export const useAppMutate = () => {
         }
         dispatch(resetEditedNews())
       },
+      onError: () => {
+        dispatch(resetEditedNews())
+      },
     }
   )
   const deleteNewsMutation = useMutation(
@@ -141,6 +156,9 @@ export const useAppMutate = () => {
             previousNews.filter((news) => news.id !== variables)
           )
         }
+        dispatch(resetEditedNews())
+      },
+      onError: () => {
         dispatch(resetEditedNews())
       },
     }

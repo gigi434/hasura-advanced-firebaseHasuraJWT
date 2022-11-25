@@ -16,6 +16,9 @@ const TaskItem = ({ task }: TaskItemProps) => {
   if (deleteTaskMutation.isLoading) {
     return <div>Deleting...</div>
   }
+  if (deleteTaskMutation.error) {
+    return <div>Error</div>
+  }
 
   return (
     <li className="my-3">

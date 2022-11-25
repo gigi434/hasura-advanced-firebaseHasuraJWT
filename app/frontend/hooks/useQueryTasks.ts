@@ -1,10 +1,10 @@
 /* タスクのデータ参照用カスタムフック */
-import { useEffect } from 'react'
 import { GraphQLClient } from 'graphql-request'
+import { useEffect } from 'react'
 import { useQuery } from 'react-query'
-import { Task } from '../types/types'
-import { GET_TASKS } from '../queries/queries'
 import Cookie from 'universal-cookie'
+import { GET_TASKS } from '../queries/queries'
+import { Task } from '../types/types'
 
 // クッキーを利用するための初期化
 const cookie = new Cookie()

@@ -1,8 +1,8 @@
 // ユーザーが新規登録やログイン、ログアウトなど行った際のFirebaseへのユーザー情報更新を行うカスタムフック
-import { useEffect } from 'react'
-import firebase from '../firebaseConfig'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import Cookie from 'universal-cookie'
+import firebase from '../firebaseConfig'
 
 /**
  * ユーザーのアカウント情報変更を監視するFirebaseのサブスクリプションを停止する関数オブジェクト
@@ -21,7 +21,7 @@ export const useUserChanged = () => {
   const cookie = new Cookie()
   // ページ内を移動するために初期化を実行する
   const router = useRouter()
-  //　FirebaseのFunctionで定義したJWTClaimsにトークンが定義されているか確認するための文字列を定義する
+  // FirebaseのFunctionで定義したJWTClaimsにトークンが定義されているか確認するための文字列を定義する
   const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims'
 
   useEffect(() => {
@@ -52,7 +52,7 @@ export const useUserChanged = () => {
             .firestore()
             .collection('user_meta')
             .doc(user.uid)
-          //　ドキュメントの監視を行い、更新がある場合JWTトークンをクッキーに保存し、タスクページに遷移する
+          // ドキュメントの監視を行い、更新がある場合JWTトークンをクッキーに保存し、タスクページに遷移する
           unSubMeta = userRef.onSnapshot(async () => {
             const tokenSnap = await user.getIdToken(true)
             const idTokenResultSnap = await user.getIdTokenResult()

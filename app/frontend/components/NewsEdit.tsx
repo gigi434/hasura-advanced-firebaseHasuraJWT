@@ -1,6 +1,6 @@
 import { memo, FormEvent } from 'react'
-import { useAppMutate } from '../hooks/useAppMutate'
 import { useSelector, useDispatch } from 'react-redux'
+import { useAppMutate } from '../hooks/useAppMutate'
 import { setEditedNews, selectNews } from '../slices/uiSlice'
 
 const NewsEdit = () => {
@@ -21,6 +21,9 @@ const NewsEdit = () => {
     } else {
       updateNewsMutation.mutate(editedNews)
     }
+  }
+  if (createNewsMutation.error || updateNewsMutation.error) {
+    return <div>{'Error'}</div>
   }
 
   return (

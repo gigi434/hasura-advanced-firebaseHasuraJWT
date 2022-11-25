@@ -1,8 +1,8 @@
+import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid'
 import { memo } from 'react'
 import { useDispatch } from 'react-redux'
-import { setEditedNews } from '../slices/uiSlice'
-import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid'
 import { useAppMutate } from '../hooks/useAppMutate'
+import { setEditedNews } from '../slices/uiSlice'
 import { News } from '../types/types'
 
 interface NewsItemProps {
@@ -17,6 +17,9 @@ const NewsItem = ({ news }: NewsItemProps) => {
   const { deleteNewsMutation } = useAppMutate()
   if (deleteNewsMutation.isLoading) {
     return <p>Deleting...</p>
+  }
+  if (deleteNewsMutation.error) {
+    return <p>Error</p>
   }
 
   return (
